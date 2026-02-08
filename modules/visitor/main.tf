@@ -99,3 +99,11 @@ output "aws_func_url" {
   description = "aws lambda function URL"
   value = aws_lambda_function_url.funk_url.function_url
 }
+
+resource "aws_lambda_permission" "allow_public" {
+  statement_id  = "AllowPublicFunctionUrlInvocation"
+  action        = "lambda:InvokeFunctionUrl"
+  function_name = aws_lambda_function.counter.function_name
+  principal     = "*" 
+  function_url_auth_type = "NONE"
+}
