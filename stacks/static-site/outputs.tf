@@ -12,3 +12,8 @@ output "distribution_id" {
   description = "Module cdn distribution Id"
   value       = module.cdn.distribution_id
 }
+
+output "logs_bucket_name" {
+  description = "This Bucket Name is Observability Bucket Name"
+  value = aws_s3_bucket.this.id
+}

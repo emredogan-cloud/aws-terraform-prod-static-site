@@ -26,7 +26,7 @@ variable "tags" {
   default = {}
 }
 
-variable "bugets_e_mail" {
+variable "budgets_e_mail" {
   description = "Email address to which notification will be sent"
-  type = string
+  type        = string
 }
