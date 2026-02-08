@@ -17,3 +17,8 @@ output "logs_bucket_name" {
   description = "This Bucket Name is Observability Bucket Name"
   value = aws_s3_bucket.this.id
 }
+
+output "visitor" {
+  description = "Visitor Counter API Address"
+  value = module.visitor_counter.api_endpoint
+}

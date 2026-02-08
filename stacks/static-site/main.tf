@@ -35,3 +35,7 @@ module "oac_policy" {
 module "waf" {
   source = "../../modules/waf_cloudfront"
 }
+
+module "visitor_counter" {
+  source = "../../modules/visitor"
+}

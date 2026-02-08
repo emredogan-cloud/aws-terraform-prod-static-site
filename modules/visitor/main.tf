@@ -57,3 +57,45 @@ resource "aws_iam_role_policy_attachment" "attach_iam" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
+
+data "archive_file" "lamdba_zip" {
+  type = "zip"
+  source_dir = "${path.module}/lambda"
+  output_path = "${path.module}/lambda/counter.zip"
+}
+
+resource "aws_lambda_function" "counter" {
+  function_name = "lambda_visitor_func"
+  role = aws_iam_role.lambda_role.arn
+
+  filename = data.archive_file.lamdba_zip.output_path
+  source_code_hash = data.archive_file.lamdba_zip.output_base64sha256
+
+  handler = "counter.lambda_handler"
+  runtime = "python3.9"
+  timeout = 10
+
+  environment {
+    variables = {
+      TABLE_NAME = aws_dynamodb_table.table.name
+    }
+  }
+}
+
+resource "aws_lambda_function_url" "funk_url" {
+  function_name = aws_lambda_function.counter.function_name
+  authorization_type = "NONE"
+
+  cors {
+    allow_credentials = true
+    allow_origins     = ["*"] 
+    allow_methods     = ["GET"]
+    allow_headers     = ["date", "keep-alive"]
+    max_age           = 86400
+  }
+}
+
+output "aws_func_url" {
+  description = "aws lambda function URL"
+  value = aws_lambda_function_url.funk_url.function_url
+}
