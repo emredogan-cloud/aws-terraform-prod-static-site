@@ -256,12 +256,11 @@
             Active and working.
         </div>
 
-        <!-- Ziyaretçi Sayacı -->
         <div class="visitor-counter">
             <div class="visitor-counter-content">
                 <div class="visitor-icon">👀</div>
                 <div class="visitor-label">Number Of Visitor</div>
-                <div class="visitor-count">LOADING...</div>
+                <div class="visitor-count" id="visitor-count">LOADING...</div>
             </div>
         </div>
 
@@ -296,21 +295,22 @@
     <script>
         const apiUrl = "https://5smav4kzsufrbq7e3vv63jgh2i0qzirl.lambda-url.us-east-1.on.aws/";
 
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network Error");
-            }
-            return response.json();
-        })
-        .then(data => {
-            document.getElementById("visitor-count").innerText = data.count;
-            console.log("New meter reading: " + data.count);
-        })
-        .catch(error => {
-            console.error("Error loading counter:", error);
-            document.getElementById("visitor-count").innerText = "ERROR!";
-        });
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network Error");
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Artık id="visitor-count" olduğu için bu satır çalışacak
+                document.getElementById("visitor-count").innerText = data.count;
+                console.log("New meter reading: " + data.count);
+            })
+            .catch(error => {
+                console.error("Error loading counter:", error);
+                document.getElementById("visitor-count").innerText = "ERROR!";
+            });
     </script>
 </body>
 </html>
