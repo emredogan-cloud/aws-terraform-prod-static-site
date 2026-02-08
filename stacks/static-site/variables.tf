@@ -25,3 +25,8 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "bugets_e_mail" {
+  description = "Email address to which notification will be sent"
+  type = string
+}
