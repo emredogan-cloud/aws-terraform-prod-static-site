@@ -2,6 +2,18 @@ resource "aws_s3_bucket" "this" {
   bucket = "observation-logs-bucket${random_id.suffix.hex}"
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
+    bucket = aws_s3_bucket.this.id
+  rule {
+    id = "delete-old-logs-30-days"
+    status = "Enabled"
+
+    expiration {
+      days = 30
+    }
+  }
+}
+
 resource "aws_s3_bucket_ownership_controls" "bucket_control" {
   bucket = aws_s3_bucket.this.id
   rule {

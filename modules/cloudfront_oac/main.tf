@@ -1,4 +1,3 @@
-# 1. Origin Access Control (OAC) - Modern Erişim Yöntemi
 resource "aws_cloudfront_origin_access_control" "default" {
   name                              = "oac-${split(".", var.origin_domain_name)[0]}" # Benzersiz isim
   description                       = "OAC for Static Site"
