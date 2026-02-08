@@ -35,7 +35,8 @@ resource "aws_iam_policy" "lambda_policy" {
         Action = [
           "dynamodb:GetItem",
           "dynamodb:UpdateItem",
-          "dynamodb:PutItem"
+          "dynamodb:PutItem",
+          "synamodb:DescribeTable"
         ]
         Effect   = "Allow"
         Resource = aws_dynamodb_table.table.arn 
@@ -58,17 +59,17 @@ resource "aws_iam_role_policy_attachment" "attach_iam" {
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
-data "archive_file" "lamdba_zip" {
+data "archive_file" "lambda_zip" {
   type = "zip"
   source_dir = "${path.module}/lambda"
-  output_path = "${path.module}/lambda/counter.zip"
+  output_path = "${path.module}/build/counter.zip"
 }
 
 resource "aws_lambda_function" "counter" {
   function_name = "lambda_visitor_func"
   role = aws_iam_role.lambda_role.arn
 
-  filename = data.archive_file.lamdba_zip.output_path
+  filename = data.archive_file.lambda_zip.output_path
   source_code_hash = data.archive_file.lamdba_zip.output_base64sha256
 
   handler = "counter.lambda_handler"
@@ -87,7 +88,7 @@ resource "aws_lambda_function_url" "funk_url" {
   authorization_type = "NONE"
 
   cors {
-    allow_credentials = true
+    allow_credentials = false
     allow_origins     = ["*"] 
     allow_methods     = ["GET"]
     allow_headers     = ["date", "keep-alive"]
