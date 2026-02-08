@@ -1,4 +1,4 @@
-variable "Distribution_arn" {
+variable "distribution_arn" {
   description = "S3 Policy File Distribution ARN"
   type = string
 }

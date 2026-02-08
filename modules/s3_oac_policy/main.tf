@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "iam_policy" {
     actions = [ "s3:GetObject" ]
 
     principals {
-      type = "service"
+      type = "Service"
       identifiers = [ "cloudfront.amazonaws.com" ]
     }
 
@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "iam_policy" {
     condition {
       test = "StringEquals"
       variable = "AWS:SourceArn"
-      values = [ var.Distribution_arn ]
+      values = [ var.distribution_arn ]
     }
   }
 }
