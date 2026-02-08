@@ -50,7 +50,12 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     }
   }
 
-  # --- VIEWER CERTIFICATE ---
+  logging_config {
+    include_cookies = false
+    bucket = var.logging_bucket_domain_name
+    prefix = "cf-logs/"
+  }
+
   viewer_certificate {
     cloudfront_default_certificate = true
 

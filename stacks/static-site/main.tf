@@ -20,6 +20,8 @@ module "cdn" {
   default_root_object = "index.html"
   price_class         = var.price_class
   tags                = var.tags
+
+  logging_bucket_domain_name = aws_s3_bucket.this.bucket_domain_name
 }
 
 module "oac_policy" {
