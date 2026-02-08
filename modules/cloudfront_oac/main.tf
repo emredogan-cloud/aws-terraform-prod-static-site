@@ -9,31 +9,29 @@ resource "aws_cloudfront_origin_access_control" "default" {
 
 # 2. CloudFront Distribution
 resource "aws_cloudfront_distribution" "s3_distribution" {
-  enabled             = true                # ZORUNLU: Dağıtımı aktif eder
-  is_ipv6_enabled     = true                # Modern standart
+  enabled             = true                
+  is_ipv6_enabled     = true                
   comment             = "Static Site Distribution"
   default_root_object = var.default_root_object
   price_class         = var.price_class
   
   tags = var.tags
 
-  # --- ORIGIN AYARLARI ---
   origin {
     domain_name              = var.origin_domain_name
-    origin_id                = "S3-Origin" # Aşağıdaki target_origin_id ile aynı olmalı
+    origin_id                = "S3-Origin" 
     origin_access_control_id = aws_cloudfront_origin_access_control.default.id
   }
 
-  # --- CACHE BEHAVIOR ---
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "S3-Origin"
 
-    viewer_protocol_policy = "redirect-to-https" # HTTP geleni HTTPS'e zorla
-    compress               = true                # Gzip/Brotli sıkıştırma
+    viewer_protocol_policy = "redirect-to-https" 
+    compress               = true               
 
-    # Basit ayarlar için Forwarded Values (Veya CachePolicyID kullanılabilir)
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.security_headers.id
     forwarded_values {
       query_string = false
       cookies {
@@ -45,7 +43,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     # cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
   }
 
-  # --- GEO RESTRICTION (NONE) ---
   restrictions {
     geo_restriction {
       restriction_type = "none"
@@ -60,7 +57,37 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     # NOT: 'cloudfront_default_certificate = true' iken minimum_protocol_version
     # genellikle 'TLSv1' olarak sabitlenir. Eğer custom domain (ACM) kullanırsam
     # aşağıdaki satır devreye girer. Şimdilik default cert ile bu satır uyarı verebilir,
-    # gerekirse silebilirsim.
+    # gerekirse silebilirim.
     # minimum_protocol_version = "TLSv1.2_2021" 
+  }
+}
+
+
+resource "aws_cloudfront_response_headers_policy" "security_headers" {
+  name    = "SecurityHeadersPolicy-${var.price_class}" 
+  comment = "Security headers for static site"
+
+  security_headers_config {
+    frame_options {
+      frame_option = "DENY"
+      override     = true
+    }
+    
+    xss_protection {
+      mode_block = true
+      protection = true
+      override   = true
+    }
+
+    content_type_options {
+      override = true
+    }
+
+    strict_transport_security {
+      access_control_max_age_sec = 31536000 
+      include_subdomains         = true
+      preload                    = true
+      override                   = true
+    }
   }
 }
