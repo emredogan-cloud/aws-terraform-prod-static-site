@@ -20,6 +20,7 @@ module "cdn" {
   default_root_object = "index.html"
   price_class         = var.price_class
   tags                = var.tags
+  waf_acl_id = module.waf.waf_arn
 
   logging_bucket_domain_name = aws_s3_bucket.this.bucket_domain_name
 }
@@ -29,4 +30,8 @@ module "oac_policy" {
 
   bucket_name      = module.site_bucket.bucket_name
   distribution_arn = module.cdn.Distribution_arn
+}
+
+module "waf" {
+  source = "../../modules/waf_cloudfront"
 }

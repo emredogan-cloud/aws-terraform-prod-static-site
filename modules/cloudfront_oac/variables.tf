@@ -26,3 +26,9 @@ variable "logging_bucket_domain_name" {
   type = string
   default = ""
 }
+
+variable "waf_acl_id" {
+  description = "for cloudfront waf"
+  type = string
+  default = null
+}

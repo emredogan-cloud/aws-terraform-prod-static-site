@@ -9,6 +9,7 @@ resource "aws_cloudfront_origin_access_control" "default" {
 # 2. CloudFront Distribution
 resource "aws_cloudfront_distribution" "s3_distribution" {
   enabled             = true
+  web_acl_id = var.waf_acl_id
   is_ipv6_enabled     = true
   comment             = "Static Site Distribution"
   default_root_object = var.default_root_object
