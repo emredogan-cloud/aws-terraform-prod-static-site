@@ -18,22 +18,22 @@ graph TD
     User((User / Browser)):::user
     
     subgraph AWS_Cloud [AWS Cloud]
-        style AWS_Cloud fill:#f2f2f2,stroke:#232F3E,stroke-dasharray:5 5
+        style AWS_Cloud fill:#f2f2f2,stroke:#232F3E,stroke-dasharray:5 5;
         
         subgraph Edge [Edge Locations]
-            style Edge fill:#e6e6e6,stroke:#666
-            WAF[AWS WAF<br/>(Security Rules)]:::security
-            CF[Amazon CloudFront<br/>(CDN Distribution)]:::aws
+            style Edge fill:#e6e6e6,stroke:#666;
+            WAF["AWS WAF<br/>(Security Rules)"]:::security
+            CF["Amazon CloudFront<br/>(CDN Distribution)"]:::aws
         end
 
         subgraph Region [Region: eu-central-1]
-            style Region fill:#fff,stroke:#666
+            style Region fill:#fff,stroke:#666;
             
-            S3_Site[S3 Bucket<br/>(Static Site Hosting)]:::storage
-            Lambda[AWS Lambda<br/>(Visitor Counter)]:::compute
-            DDB[(Amazon DynamoDB<br/>Visitor Table)]:::db
+            S3_Site["S3 Bucket<br/>(Static Site Hosting)"]:::storage
+            Lambda["AWS Lambda<br/>(Visitor Counter)"]:::compute
+            DDB[("Amazon DynamoDB<br/>Visitor Table")]:::db
             
-            S3_Logs[S3 Bucket<br/>(Access Logs)]:::storage
+            S3_Logs["S3 Bucket<br/>(Access Logs)"]:::storage
         end
     end
 
