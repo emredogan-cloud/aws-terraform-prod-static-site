@@ -18,7 +18,7 @@ graph TD
     User((User / Browser)):::user
     
     subgraph AWS_Cloud [AWS Cloud]
-        style AWS_Cloud fill:#f2f2f2,stroke:#232F3E,stroke-dasharray: 5 5
+        style AWS_Cloud fill:#f2f2f2,stroke:#232F3E,stroke-dasharray:5 5
         
         subgraph Edge [Edge Locations]
             style Edge fill:#e6e6e6,stroke:#666
@@ -50,6 +50,8 @@ graph TD
     S3_Site -.->|Logging| S3_Logs
 
 
+
+```
 
 A production-ready infrastructure project to host a secure static website on AWS using Terraform. This project implements a serverless architecture including CloudFront (CDN), S3 (Origin), WAF (Security), and a serverless visitor counter backend using Lambda and DynamoDB.
 
