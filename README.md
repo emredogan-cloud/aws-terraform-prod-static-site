@@ -26,7 +26,7 @@ graph TD
             CF["Amazon CloudFront<br/>(CDN Distribution)"]:::aws
         end
 
-        subgraph Region [Region: eu-central-1]
+        subgraph Region [Region: us-east-1]
             style Region fill:#fff,stroke:#666;
             
             S3_Site["S3 Bucket<br/>(Static Site Hosting)"]:::storage
