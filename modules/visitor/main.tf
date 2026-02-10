@@ -73,7 +73,7 @@ resource "aws_lambda_function" "counter" {
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
 
   handler = "counter.lambda_handler"
-  runtime = "python3.9"
+  runtime = "python3.12"
   timeout = 10
 
   environment {
