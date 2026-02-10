@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "this" {
   bucket = "observation-logs-bucket${random_id.suffix.hex}"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
@@ -7,6 +8,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
   rule {
     id = "delete-old-logs-30-days"
     status = "Enabled"
+    filter {}
 
     expiration {
       days = 30

@@ -4,9 +4,9 @@ resource "random_id" "suffix" {
 
 resource "aws_s3_bucket" "state-bucket" {
   bucket        = "prod-site${random_id.suffix.hex}"
-  force_destroy = false
+  force_destroy = true # ACTUALLY FALSE
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false # FOR TEST
   }
 }
 

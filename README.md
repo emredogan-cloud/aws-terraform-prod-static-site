@@ -4,54 +4,9 @@
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
-```mermaid
-graph TD
-    %% Define Styles
-    classDef user fill:#fff,stroke:#333,stroke-width:2px;
-    classDef aws fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:white;
-    classDef security fill:#DD344C,stroke:#232F3E,stroke-width:2px,color:white;
-    classDef storage fill:#3F8624,stroke:#232F3E,stroke-width:2px,color:white;
-    classDef compute fill:#D45B07,stroke:#232F3E,stroke-width:2px,color:white;
-    classDef db fill:#3B48CC,stroke:#232F3E,stroke-width:2px,color:white;
+## Architecture Diagram
 
-    %% Nodes
-    User((User / Browser)):::user
-    
-    subgraph AWS_Cloud [AWS Cloud]
-        style AWS_Cloud fill:#f2f2f2,stroke:#232F3E,stroke-dasharray:5 5;
-        
-        subgraph Edge [Edge Locations]
-            style Edge fill:#e6e6e6,stroke:#666;
-            WAF["AWS WAF<br/>(Security Rules)"]:::security
-            CF["Amazon CloudFront<br/>(CDN Distribution)"]:::aws
-        end
-
-        subgraph Region [Region: us-east-1]
-            style Region fill:#fff,stroke:#666;
-            
-            S3_Site["S3 Bucket<br/>(Static Site Hosting)"]:::storage
-            Lambda["AWS Lambda<br/>(Visitor Counter)"]:::compute
-            DDB[("Amazon DynamoDB<br/>Visitor Table")]:::db
-            
-            S3_Logs["S3 Bucket<br/>(Access Logs)"]:::storage
-        end
-    end
-
-    %% Connections
-    User -->|HTTPS Request| WAF
-    WAF -->|Allowed Traffic| CF
-    
-    CF -->|OAC Secured Access| S3_Site
-    CF -->|API Call| Lambda
-    
-    Lambda -->|Read/Write Count| DDB
-    
-    CF -.->|Logging| S3_Logs
-    S3_Site -.->|Logging| S3_Logs
-
-
-
-```
+![Architecture](docs/static_site.png)
 
 A production-ready infrastructure project to host a secure static website on AWS using Terraform. This project implements a serverless architecture including CloudFront (CDN), S3 (Origin), WAF (Security), and a serverless visitor counter backend using Lambda and DynamoDB.
 
