@@ -88,8 +88,8 @@ resource "aws_lambda_function_url" "funk_url" {
   authorization_type = "NONE"
 
   cors {
-    allow_credentials = false
-    allow_origins     = ["*"] 
+    allow_credentials = true
+    allow_origins     = ["d3s0oaqvd6y96u.cloudfront.net"] 
     allow_methods     = ["GET"]
     allow_headers     = ["date", "keep-alive"]
     max_age           = 86400
