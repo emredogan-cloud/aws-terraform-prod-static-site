@@ -36,7 +36,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "dynamodb:GetItem",
           "dynamodb:UpdateItem",
           "dynamodb:PutItem",
-          "synamodb:DescribeTable"
+          "dynamodb:DescribeTable"
         ]
         Effect   = "Allow"
         Resource = aws_dynamodb_table.table.arn 
@@ -88,7 +88,7 @@ resource "aws_lambda_function_url" "funk_url" {
   authorization_type = "NONE"
 
   cors {
-    allow_credentials = true
+    allow_credentials = false
     allow_origins     = ["*"] 
     allow_methods     = ["GET"]
     allow_headers     = ["date", "keep-alive"]
