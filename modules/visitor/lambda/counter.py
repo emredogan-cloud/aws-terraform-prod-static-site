@@ -7,6 +7,13 @@ table_name = os.environ['TABLE_NAME']
 table = dynamodb.Table(table_name)
 
 def lambda_handler(event, context):
+    headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', 
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    }
+    
     try:
         response = table.update_item(
             Key={'id': 'site_stats'},
@@ -19,6 +26,7 @@ def lambda_handler(event, context):
         
         return {
             'statusCode': 200,
+            'headers': headers, 
             'body': json.dumps({'count': new_count})
         }
         
@@ -26,5 +34,6 @@ def lambda_handler(event, context):
         print(f"Hata olustu: {str(e)}")
         return {
             'statusCode': 500,
+            'headers': headers, 
             'body': json.dumps({'error': str(e)})
         }
