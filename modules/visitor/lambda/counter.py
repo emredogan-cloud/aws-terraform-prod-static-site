@@ -10,7 +10,7 @@ def lambda_handler(event, context):
     headers = {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*', 
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type'
     }
     
@@ -26,14 +26,12 @@ def lambda_handler(event, context):
         
         return {
             'statusCode': 200,
-            'headers': headers, 
+            'headers': headers,
             'body': json.dumps({'count': new_count})
         }
-        
     except Exception as e:
-        print(f"Hata olustu: {str(e)}")
         return {
             'statusCode': 500,
-            'headers': headers, 
+            'headers': headers,
             'body': json.dumps({'error': str(e)})
         }

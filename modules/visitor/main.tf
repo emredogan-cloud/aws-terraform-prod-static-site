@@ -102,7 +102,7 @@ output "aws_func_url" {
 }
 
 resource "aws_lambda_permission" "allow_public" {
-  statement_id  = "AllowPublicFunctionUrlInvocation"
+  statement_id  = "AllowPublicFunctionUrlInvocationV2"
   action        = "lambda:InvokeFunctionUrl"
   function_name = aws_lambda_function.counter.function_name
   principal     = "*" 
